@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Skills Narrador</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="top">
+      <img class="logo" src="../icons/icon-48.png" alt="" width="32" height="32" />
+      <div class="top-text">
+        <h1>Skills Narrador</h1>
+        <p>La transcripción del video, en voz alta</p>
+      </div>
+      <label class="switch" title="Activar o desactivar el narrador">
+        <input type="checkbox" id="enabled" />
+        <span class="track" aria-hidden="true"></span>
+        <span class="sr-only">Narrador activado</span>
+      </label>
+    </header>
+
+    <section class="status" id="status" data-state="unknown">
+      <span class="dot" aria-hidden="true"></span>
+      <div class="status-text">
+        <strong id="statusTitle">Buscando transcripción…</strong>
+        <span id="statusDetail"></span>
+      </div>
+      <button type="button" class="btn tonal" id="repeat" title="Volver a leer el párrafo actual" disabled>Repetir</button>
+    </section>
+
+    <section class="group">
+      <div class="group-head">
+        <h2>Voz</h2>
+        <div class="segmented" role="radiogroup" aria-label="Motor de voz">
+          <button type="button" role="radio" data-engine="supertonic" title="Voz neural Supertonic 3, generada en tu equipo">Neural</button>
+          <button type="button" role="radio" data-engine="browser" title="Voces instaladas en el sistema o el navegador">Sistema</button>
+        </div>
+      </div>
+
+      <div id="neuralPanel">
+        <div class="row voice-row">
+          <select id="neuralVoice" aria-label="Voz neural"></select>
+          <select id="neuralSteps" class="quality" aria-label="Calidad de la voz neural" title="Más pasos = voz más limpia, pero tarda más en generarse">
+            <option value="0">Calidad auto</option>
+            <option value="3">Rápida</option>
+            <option value="5">Equilibrada</option>
+            <option value="8">Máxima</option>
+          </select>
+          <button type="button" class="btn outlined test">Probar</button>
+        </div>
+        <div class="neural-status" id="neuralStatus" data-state="unknown">
+          <span id="neuralText">Comprobando la voz neural…</span>
+          <button type="button" class="link" id="neuralAction" hidden></button>
+          <progress id="neuralProgress" max="1" value="0" hidden></progress>
+        </div>
+      </div>
+
+      <div id="browserPanel" hidden>
+        <div class="row voice-row">
+          <select id="voice" aria-label="Voz del sistema"></select>
+          <button type="button" class="btn outlined test">Probar</button>
+        </div>
+        <label class="check">
+          <input type="checkbox" id="allVoices" />
+          <span>Mostrar voces de todos los idiomas</span>
+        </label>
+      </div>
+
+      <div class="sliders">
+        <div class="slider">
+          <label for="rate">Velocidad</label>
+          <output id="rateOut" for="rate"></output>
+          <input type="range" id="rate" min="0.5" max="2" step="0.05" />
+        </div>
+        <div class="slider" id="maxRateRow" title="Hasta dónde puede acelerar la voz para no quedarse atrás del video">
+          <label for="maxRate">Velocidad máx.</label>
+          <output id="maxRateOut" for="maxRate"></output>
+          <input type="range" id="maxRate" min="1" max="2.5" step="0.05" />
+        </div>
+        <div class="slider" id="pitchRow">
+          <label for="pitch">Tono</label>
+          <output id="pitchOut" for="pitch"></output>
+          <input type="range" id="pitch" min="0.5" max="1.5" step="0.05" />
+        </div>
+        <div class="slider">
+          <label for="volume">Volumen</label>
+          <output id="volumeOut" for="volume"></output>
+          <input type="range" id="volume" min="0" max="1" step="0.05" />
+        </div>
+      </div>
+    </section>
+
+    <section class="group">
+      <h2>Sincronización</h2>
+      <label class="check">
+        <input type="checkbox" id="muteOriginal" />
+        <span>Silenciar el audio original del video</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="adaptiveRate" />
+        <span>Acelerar la voz si se queda atrás del video</span>
+      </label>
+      <label class="field">
+        <span>Cuando avanza al siguiente párrafo</span>
+        <select id="onParagraphChange">
+          <option value="queue">Terminar la frase y continuar</option>
+          <option value="interrupt">Cortar y leer el nuevo párrafo</option>
+        </select>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="showOverlay" />
+        <span>Mostrar el panel flotante en la página</span>
+      </label>
+    </section>
+
+    <footer class="foot">
+      <span id="shortcut">Atajo: sin asignar</span>
+      <button type="button" class="link" id="shortcuts">Cambiar atajo</button>
+    </footer>
+
+    <script src="../shared/defaults.js"></script>
+    <script src="../shared/voices.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>

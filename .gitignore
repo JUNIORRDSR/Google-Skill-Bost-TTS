@@ -1,0 +1,17 @@
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+
+# Empaquetado de la extensión
+*.zip
+*.crx
+*.pem
+
+# Dependencias y temporales
+node_modules/
+*.log
